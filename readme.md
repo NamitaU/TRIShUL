@@ -12,8 +12,19 @@ Data Format:
 To run the code, the input data must follow the same structure as provided in sample.csv.
 
 
+Install:
+The code can be cloned from the repository
+
+git clone https://github.com/yourusername/trishul.git
+
+Requirements: 
+See the requirement.txt file for Python dependencies.
+
+
 Usage:
 Run analysis.py
+
+
 
 
 Citation:
