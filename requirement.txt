@@ -1,0 +1,9 @@
+# requirements
+
+numpy
+pandas
+matplotlib
+astropy
+scipy
+rpy2
+pingouin
