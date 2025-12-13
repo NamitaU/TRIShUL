@@ -1,5 +1,4 @@
 import numpy as np
-#import matplotlib.pyplot as plt
 import pandas as pd
 import itertools
 from matplotlib import pyplot as plt, colors
@@ -18,12 +17,10 @@ def cummulative_pol(df, pt= True): #window=3,
 	df = df.sort_values('mu')
 	cumm_dMaha = np.cumsum(df['dMaha'])
 	if(pt == True):
-		# Differential qs plot
 		fig, ax1= plt.subplots(figsize=(8,6))
 		plt.plot(df.index.values, cumm_dMaha, label="Cumulative dMaha", color="green", marker = 'o', ls = 'none')
 		plt.xlabel("Distance")
 		plt.ylabel("cumulative Mahalanobis distance")
-		#plt.title("diff qu mu")
 		plt.legend()
 		plt.show()
 	df['cum_dMaha'] = cumm_dMaha
