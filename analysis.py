@@ -1,20 +1,15 @@
 import numpy as np
 from astropy.io import ascii
 from astropy.table import Table
-#import matplotlib.pyplot as plt
 import pandas as pd
 import Trishul as T
 import os, fnmatch
 
 
-path2cat = '/Users/namita/Documents/PDF/IA_FORTH'
-spath = path2cat
-hybrid = ['sample_2C.csv']
-F = hybrid[0]
-pixID = F[-11:-4]
-res_hybrid = None #pd.read_csv(os.path.join(path2hybrid, F_res_hybrid), index_col=0) #None
+F = 'sample_2C.csv' # change it to your file
+res_hybrid = None 
 print('Filename = ', F)
-data = ascii.read(os.path.join(path2cat, F),delimiter=',')
+data = ascii.read(F,delimiter=',')
 q = data['q_obs']*100
 u = data['u_obs']*100
 eq = data['s_q']*100
@@ -24,7 +19,7 @@ eplx = data['s_plx']
 dis = 1000/plx
 edis = dis**2 * (eplx/1000)
 mu = 5*np.log10(dis) - 5
-s_mu = 5*edis/(2.303*dis) # derivative of ln x = 1/x not log x = ln(x)/2.303 = 1/(2.303*x)
+s_mu = 5*edis/(2.303*dis) 
 GPA = 0.5 * np.arctan2(u, q) * 180 / np.pi
 pol = np.sqrt(q**2 + u**2)
 indx = np.where(GPA < 0)[0]
@@ -46,13 +41,6 @@ df = df.sort_values(by='dis').reset_index(drop=True)
 
 sc = 5/len(df)
 mu_clouds, e_mu_clouds, e_mu_lower, e_mu_upper, flag, nth_layer = T.trisul_run(df, param = 'dMaha', res_hybrid = res_hybrid)
-				
-				
-print('#################################################### \n ')
-print('\n ################################################## \n')
-print('range of breaks detected in p = ', mu_clouds, e_mu_clouds, flag)
-print('#################################################### \n ')
-print('\n #################################################### \n ')
 				
 if(len(mu_clouds) == 0):
 	output_df = pd.DataFrame()
@@ -76,16 +64,19 @@ if res_hybrid is not None:
 	flag[:nth_layer] = res_hybrid.loc['flag'].values[:nth_layer]
 
 plx_clouds, sys_left_err, sys_right_err, e_plx_clouds,flag = T.sys_unc_calc(df, plx_clouds, e_plx_clouds, flag, nth_layer, res_hybrid)
+
 plx_clouds_f, sys_left_err_f, sys_right_err_f, e_plx_clouds_f, flag_f =  T.merge_asymm(plx_clouds, sys_left_err, sys_right_err, e_plx_clouds,flag, 2, min_value = 6)
+
 sys_left_bound_f = np.add(plx_clouds_f, sys_left_err_f)
 sys_right_bound_f = np.subtract(plx_clouds_f, sys_right_err_f)
-################################# calculating qs and us #####################################
+
 results_brkpt = T.compute_cloud_polarization(df, np.array(plx_clouds_f), np.array(e_plx_clouds_f), np.array(sys_left_bound_f), np.array(sys_right_bound_f), np.array(flag_f), nth_layer, res_hybrid)
-outfile = os.path.join(spath, F[:-4])
+
+outfile =  F[:-4]
 output_df = pd.DataFrame(results_brkpt)
 print(output_df)
 T.plot_qumu(df, output_df, outfile = outfile, nth_layer = nth_layer, res_hybrid=res_hybrid)	
-file_path = spath+ '/result_'+F[:-4]+'.csv'
+file_path = 'result_'+F[:-4]+'.csv'
 with open(file_path, 'w') as f:
 	output_df.to_csv(f, index=True) 
 				
