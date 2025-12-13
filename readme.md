@@ -5,7 +5,7 @@ Technique for Reconstructing magnetic Interstellar Structure Using starLight pol
 
 References:
 
-Uppal., N., et al., 2025. [https://ui.adsabs.harvard.edu/abs/2025arXiv251025911U/abstract]
+Uppal., N., et al., 2025, Accepted in A&A [https://ui.adsabs.harvard.edu/abs/2025arXiv251025911U/abstract]
 
 This method decompose line-of-sight (LOS) stellar polarization as a function of distance and identifies the number of dust clouds
 along the LOS and computes their mean polarization properties. 
