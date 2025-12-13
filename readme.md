@@ -24,7 +24,7 @@ See the requirement.txt file for Python dependencies.
 Usage:
 Run analysis.py
 
-
+use sample_2C.csv as stellar polarization data along a LOS to see the results. 
 
 
 Citation:
