@@ -797,7 +797,7 @@ def plot_qumu(df, df_output, outfile, nth_layer, res_hybrid):
 		prev_eq = weighted_error(seg['eq'])
 		prev_eu = weighted_error(seg['eu'])
 		xmin = df['mu'].min()
-		if((res_hybrid is None) & (nth_layer !=0)):
+		if((res_hybrid is None) & (nth_layer !=0) & len(seg)==0): 
 			prev_q,prev_u, prev_eq, prev_eu  = 0, 0,  0, 0
 			xmin = df['mu'].min()
 	else:
